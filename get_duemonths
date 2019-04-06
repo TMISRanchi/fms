@@ -1,0 +1,39 @@
+ <?php
+ public function get_due_month($fee_type){
+    $feetype=urldecode($fee_type);
+    $fee_type_f=preg_replace("/\d/",'',$feetype);
+    $this->load->model('dashmodel');
+    $month_name = array(
+
+      ["months" =>"april"],
+      ["months" =>"may"],
+      ["months" =>"june"],
+      ["months" =>"july"],
+      ["months" =>"august"],
+      ["months" =>"september"],
+      ["months" =>"october"],
+      ["months" =>"november"],
+      ["months" =>"december"],
+      ["months" =>"january"],
+      ["months" =>"february"],
+      ["months" =>"march"]
+
+    );
+    // $test=json_encode($month_name);
+    // echo "<pre>";
+    // print_r($month_name);
+    // exit;
+
+    $paid_months=$this->dashmodel->get_due_month_by($fee_type_f);
+    $test=json_decode(json_encode($paid_months), True);
+    // $test2=json_encode($due_months);
+    // echo "<pre>";
+    // print_r($due_months);
+    // exit;
+     $due_months=array_diff_assoc($month_name,$test);
+    // foreach ($due_months as $value) {
+    //     unset($month_name[$i][$value->months]);
+    //     $i++;
+    // }
+    echo json_encode($due_months);
+  }
